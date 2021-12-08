@@ -49,5 +49,10 @@ siemens_to_ismrmrd -f data/siemens_raw_spiral.dat -z 1 -o data/mrd_spiral_noise.
 ## simple recon with matlab
 ```matlab
 dirPath = [pwd filesep];
-spiral_images = mrd_spiral_recon([dirPath mrd_spiral.h5],[dirPath mrd_spiral_noise.h5])
+uncorrected_spiral_images = mrd_spiral_recon([dirPath mrd_spiral.h5],[dirPath mrd_spiral_noise.h5])
+```
+And using attached GIRF-corrected trajectories
+```matlab
+dirPath = [pwd filesep];
+corrected_spiral_images = mrd_spiral_recon([dirPath mrd_spiral_traj.h5],[dirPath mrd_spiral_noise.h5])
 ```
