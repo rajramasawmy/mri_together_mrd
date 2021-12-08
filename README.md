@@ -34,13 +34,6 @@ https://ismrmrd.github.io/apidocs/1.5.0/
 ## Publication
 https://onlinelibrary.wiley.com/doi/10.1002/mrm.26089 
 
-# Installing
-## Quick Install Guide Videos
-
-[mrd-viewer](https://www.youtube.com/watch?v=7ocDY2qYQUA)
-
-[ismrmrd & siemens converter](https://www.youtube.com/watch?v=rkPaLznuT0Q)
-
 # Previous Video Tutorials
 Introduction to MRD/ISMRMRD
 
@@ -49,3 +42,47 @@ https://www.youtube.com/watch?v=LhyqkNXdsoc
 Data Conversion and editing
 
 https://www.youtube.com/watch?v=ggauvF13-OM&t=592s
+
+# Installing
+## Quick Install Guide Videos
+
+[mrd-viewer](https://www.youtube.com/watch?v=7ocDY2qYQUA)
+
+[ismrmrd & siemens converter](https://www.youtube.com/watch?v=rkPaLznuT0Q)
+
+## Installation (everything)
+- note that this is installing things to the user home folder - you might want to change this!
+- This install creates a local directory for installed programs, which does not require sudo (but sudo is still required for package installations)
+
+```bash
+cd ~
+mkdir local
+
+sudo apt-get install g++ cmake git
+sudo apt-get install libboost-all-dev xsdcxx libxerces-c-dev libhdf5-serial-dev h5utils hdf5-tools libtinyxml-dev libxml2-dev libxslt1-dev
+sudo apt-get -y install doxygen git-core graphviz libboost-all-dev libfftw3-dev libhdf5-serial-dev
+
+pip3 install ismrmrd gadgetron numpy matplotlib tabulate
+pip3 install git+https://github.com/ismrmrd/ismrmrdviewer.git
+
+git clone https://github.com/ismrmrd/ismrmrd.git
+mkdir ismrmrd/build && cd ismrmrd/build
+cmake -DCMAKE_INSTALL_PREFIX=~/local/ ..
+make install
+
+cd ../../
+git clone https://github.com/ismrmrd/siemens_to_ismrmrd.git
+mkdir siemens_to_ismrmrd/build && cd ismrmrd/build
+cmake -DCMAKE_INSTALL_PREFIX=~/local/ ..
+make install
+```
+
+# Siemens MRI Cartesian conversion and Python recon
+```bash
+cd shell/
+sh convert_siemens_data.sh
+cd ../python/
+python3 cartesian_demo.py
+```
+
+
