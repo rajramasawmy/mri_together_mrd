@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# ****************************
+
+# Normally .dat with "total raid file" export has 2 datasets:
+# [1] = coil noise
+# [2] = scan data
+# But sometimes it can be more, so this script checks how many [N] datasets there are
+# and will convert [1] for the noise and [N] for the data, maintaining the XXX.dat name. 
+
+# R Ramasawmy NHLBI 2019-02-23
+
+# ****************************
+
+# make directories
+mkdir h5
+mkdir noise
+
+# for all dat files in the folder
+FILES=*.dat
+
+for ifile in $FILES
+do
+    echo "Processing $ifile file..."
+
+    # debugging:
+    #   echo "extention ${ifile##*.}"
+    #   echo "fname ${ifile%.*}"
+
+    # Check how many files by shamming a conversion of the 9th dataset
+    # ... and searching for "The file you are trying to convert has only X measurements."
+    NUMFILES=$(siemens_to_ismrmrd -f $ifile -z 9 | grep only | grep -o '[0-9]*')
+    # echo $NUMFILES
+
+    if [ $NUMFILES -gt "1" ]
+    then
+	# If .dat has noise dependency
+	# Only process first noise measurement, and label it "noise_XXX.h5"
+	siemens_to_ismrmrd -f $ifile -z 1 -o noise/noise_${ifile%.*}.h5
+    fi
+    
+    siemens_to_ismrmrd -f $ifile -z $NUMFILES -o h5/${ifile%.*}.h5
+
+done
