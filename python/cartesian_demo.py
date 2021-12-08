@@ -61,6 +61,8 @@ for ii in range(num_acqs):
             acq.idx.repetition,
             acq.idx.set] = acq.data
 
+# At this point, the data is ready for any python reconstruction!
+
 # example 2D Cartesian reconstruction 
 coil_images = cifftn(kspace, axes=[1,2])
 image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images)), axis=0)))
