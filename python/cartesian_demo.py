@@ -66,8 +66,8 @@ for ii in range(num_acqs):
 
 # example 2D Cartesian reconstruction 
 coil_images = cifftn(kspace, axes=[1,2])
-image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images)), axis=0)))
-plt.imshow(image[:,:,0,0,0]) # plt.imshow(image[:,:,0])
+image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images[:,:,:,0,0,0,0,0,0,0])), axis=0)))
+plt.imshow(image)
 plt.show()
 
     
