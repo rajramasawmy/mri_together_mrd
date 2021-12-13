@@ -7,6 +7,9 @@ from gadgetron.util.cfft import cifftn
 # load data and mrd-header
 dataset = mrd.Dataset('../data/converted_siemens_data.h5')
 #dataset = mrd.Dataset('../data/ge_data/converted_data.h5')
+
+dataset = mrd.Dataset('../data/ge_data/converted_ge_scan_archive.h5')
+
 exp_header = mrd.xsd.CreateFromDocument(dataset.read_xml_header())
 
 # grab encoding information structure, and extract experiment dimensions
