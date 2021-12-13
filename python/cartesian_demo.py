@@ -6,6 +6,10 @@ from gadgetron.util.cfft import cifftn
 
 # load data and mrd-header
 dataset = mrd.Dataset('../data/converted_siemens_data.h5')
+#dataset = mrd.Dataset('../data/ge_data/converted_data.h5')
+
+dataset = mrd.Dataset('../data/ge_data/converted_ge_scan_archive.h5')
+
 exp_header = mrd.xsd.CreateFromDocument(dataset.read_xml_header())
 
 # grab encoding information structure, and extract experiment dimensions
@@ -19,7 +23,7 @@ e_5 = encoding_info.encodingLimits.slice.maximum + 1
 e_6 = encoding_info.encodingLimits.contrast.maximum + 1
 e_7 = encoding_info.encodingLimits.phase.maximum + 1
 e_8 = encoding_info.encodingLimits.repetition.maximum + 1
-e_9 = encoding_info.encodingLimits.set_.maximum + 1
+e_9 = encoding_info.encodingLimits.set.maximum + 1
 
 # receiver channel information is in the acquisitionSystemInformation
 num_channels = exp_header.acquisitionSystemInformation.receiverChannels
@@ -65,8 +69,8 @@ for ii in range(num_acqs):
 
 # example 2D Cartesian reconstruction 
 coil_images = cifftn(kspace, axes=[1,2])
-image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images)), axis=0)))
-plt.imshow(image) # plt.imshow(image[:,:,0])
+image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images[:,:,:,0,0,0,0,0,0,0])), axis=0)))
+plt.imshow(image)
 plt.show()
 
     

@@ -84,5 +84,17 @@ sh convert_siemens_data.sh
 cd ../python/
 python3 cartesian_demo.py
 ```
+# GE MRI Cartesian data conversion
+To install ge2ismrmrd converter we need to install GE Orchestra on a linux distro with the correct libraries. We will be using a opensuse_15.2 image with orchestra installed for this demo. 
+A more detailed installation with debuggin tips is available in the repo that is primarily maintained by Dr. Vinai Roopchansingh. (https://github.com/ismrmrd/ge_to_ismrmrd).
+
+Please update the paths as needed in the install_ge_convertor.sh. We generally install in ~/local/ folder and thats what the install script would do as well.
+
+```bash
+cd shell/
+sh install_ge_convertor.sh
+source ~/.bashrc 
+sh convert_ge_data.sh
+````
 
 
