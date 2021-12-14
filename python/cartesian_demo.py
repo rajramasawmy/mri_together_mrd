@@ -1,11 +1,16 @@
+# required for handling MRD
 import ismrmrd as mrd
 import numpy as np
+import sys
+
+# packages for display
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 from gadgetron.util.cfft import cifftn
 
 # load data and mrd-header
-dataset = mrd.Dataset('../data/converted_siemens_data.h5')
+dataset = mrd.Dataset(sys.argv[1])
+#dataset = mrd.Dataset('../data/converted_siemens_data.h5')
 #dataset = mrd.Dataset('../data/ge_data/converted_data.h5')
 
 dataset = mrd.Dataset('../data/ge_data/converted_ge_scan_archive.h5')
@@ -16,7 +21,7 @@ exp_header = mrd.xsd.CreateFromDocument(dataset.read_xml_header())
 encoding_info = exp_header.encoding[0]
 
 e_1 = encoding_info.encodedSpace.matrixSize.x
-e_2 = encoding_info.encodedSpace.matrixSize.y # e_2 = encoding_info.encodingLimits.kspace_encoding_step_1.maximum
+e_2 = encoding_info.encodedSpace.matrixSize.y
 e_3 = encoding_info.encodedSpace.matrixSize.z 
 e_4 = encoding_info.encodingLimits.average.maximum + 1
 e_5 = encoding_info.encodingLimits.slice.maximum + 1
@@ -24,6 +29,12 @@ e_6 = encoding_info.encodingLimits.contrast.maximum + 1
 e_7 = encoding_info.encodingLimits.phase.maximum + 1
 e_8 = encoding_info.encodingLimits.repetition.maximum + 1
 e_9 = encoding_info.encodingLimits.set.maximum + 1
+
+# Note that one can extract the matrix size using this encodingLimits structure:
+#   e_2 = encoding_info.encodingLimits.kspace_encoding_step_1.maximum
+# and also pull the experimental dimensions for the acquisition header information.
+# For some situations, the encoding_info.reconSpace may have more appropriate dimensions 
+#   for reconstrucion.
 
 # receiver channel information is in the acquisitionSystemInformation
 num_channels = exp_header.acquisitionSystemInformation.receiverChannels
@@ -68,7 +79,10 @@ for ii in range(num_acqs):
 # At this point, the data is ready for any python reconstruction!
 
 # example 2D Cartesian reconstruction 
+# fft in RO and PE1 axes
 coil_images = cifftn(kspace, axes=[1,2])
+
+# example: display first image 
 image = np.squeeze(np.sqrt(np.sum(np.square(np.abs(coil_images[:,:,:,0,0,0,0,0,0,0])), axis=0)))
 plt.imshow(image)
 plt.show()
