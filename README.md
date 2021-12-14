@@ -12,7 +12,8 @@ Adrienne Campbell-Washburn @ NHLBI, NIH.
     - cartesian mrd
     - spiral mrd
     - siemens_raw_cartesian
-    - ge_raw_cartesian
+    - ge_data_directory
+    - bruker_data
 - **python**
     - simple cartesian reconstruction demo
 - **matlab**
