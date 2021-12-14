@@ -8,12 +8,18 @@ from tabulate import tabulate
 import matplotlib.pyplot as plt
 from gadgetron.util.cfft import cifftn
 
-# load data and mrd-header
-dataset = mrd.Dataset(sys.argv[1])
-#dataset = mrd.Dataset('../data/converted_siemens_data.h5')
-#dataset = mrd.Dataset('../data/ge_data/converted_data.h5')
+# Select file
+if len(sys.argv) < 2:
+    fname = '../data/converted_siemens_data.h5'
+    # fname = '../data/ge_data/converted_data.h5'
+else:
+    fname = sys.argv[1]
 
-dataset = mrd.Dataset('../data/ge_data/converted_ge_scan_archive.h5')
+print(["Reconstructing: " + fname])
+
+# load data and mrd-header
+
+dataset = mrd.Dataset(fname)
 
 exp_header = mrd.xsd.CreateFromDocument(dataset.read_xml_header())
 

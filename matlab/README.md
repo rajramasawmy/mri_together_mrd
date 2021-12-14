@@ -56,3 +56,22 @@ And using attached GIRF-corrected trajectories
 dirPath = [pwd filesep];
 corrected_spiral_images = mrd_spiral_recon([dirPath mrd_spiral_traj.h5],[dirPath mrd_spiral_noise.h5])
 ```
+
+# Cartesian Bruker conversion and recon
+
+Bruker conversion using [mri-reco](https://magneticresonanceimaging.github.io/MRIReco.jl/latest/filehandling/#Conversion) in julia
+
+Install Julia [for linux](https://julialang.org/downloads/platform/#linux_and_freebsd)
+
+```bash
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
+tar zxvf julia-1.7.0-linux-x86_64.tar.gz
+export PATH="$PATH:/path/to/<Julia directory>/bin"
+```
+
+Install mri-reco
+https://magneticresonanceimaging.github.io/MRIReco.jl/latest/#Installation
+
+```
+
+```
