@@ -53,6 +53,12 @@ https://www.youtube.com/watch?v=ggauvF13-OM&t=592s
 ## Installation (everything)
 - note that this is installing things to the user home folder - you might want to change this!
 - This install creates a local directory for installed programs, which does not require sudo (but sudo is still required for package installations)
+- You will have to add the ~/local directory to your path, i.e. something like..
+```
+export ISMRMRD_HOME=~/local
+export LD_LIBRARY_PATH=${ISMRMRD_HOME}/lib:${LD_LIBRARY_PATH}
+export PATH=~/local/bin:~/local/usr/bin:${ISMRMRD_HOME}/bin:${PATH}
+```
 
 ```bash
 cd ~
@@ -77,6 +83,7 @@ cmake -DCMAKE_INSTALL_PREFIX=~/local/ ..
 make install
 ```
 
+
 # Siemens MRI Cartesian conversion and Python recon
 ```bash
 cd shell/
@@ -95,6 +102,6 @@ cd shell/
 sh install_ge_convertor.sh
 source ~/.bashrc 
 sh convert_ge_data.sh
-````
-
-
+```
+# Siemens Spiral conversion (c++) and Bruker Cartesian (julia) Matlab reconstruction
+See [matlab](matlab/README.md) folder for some more examples. 

@@ -49,19 +49,20 @@ siemens_to_ismrmrd -f data/siemens_raw_spiral.dat -z 1 -o data/mrd_spiral_noise.
 ## simple recon with matlab
 ```matlab
 dirPath = [pwd filesep];
-uncorrected_spiral_images = mrd_spiral_recon([dirPath mrd_spiral.h5],[dirPath mrd_spiral_noise.h5])
+uncorrected_spiral_images = mrd_recon_spiral([dirPath 'mrd_spiral.h5'],[dirPath 'mrd_spiral_noise.h5']);
 ```
 And using attached GIRF-corrected trajectories
 ```matlab
 dirPath = [pwd filesep];
-corrected_spiral_images = mrd_spiral_recon([dirPath mrd_spiral_traj.h5],[dirPath mrd_spiral_noise.h5])
+corrected_spiral_images = mrd_recon_spiral([dirPath 'mrd_spiral_traj.h5'],[dirPath 'mrd_spiral_noise.h5']);
 ```
 
 # Cartesian Bruker conversion and recon
 
 Bruker conversion using [mri-reco](https://magneticresonanceimaging.github.io/MRIReco.jl/latest/filehandling/#Conversion) in julia
 
-Install Julia [for linux](https://julialang.org/downloads/platform/#linux_and_freebsd)
+## Install Julia 
+[for linux](https://julialang.org/downloads/platform/#linux_and_freebsd)
 
 ```bash
 wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz
@@ -69,9 +70,24 @@ tar zxvf julia-1.7.0-linux-x86_64.tar.gz
 export PATH="$PATH:/path/to/<Julia directory>/bin"
 ```
 
-Install mri-reco
+## Install mri-reco
 https://magneticresonanceimaging.github.io/MRIReco.jl/latest/#Installation
-
+```
+]
+add MRIReco
+<CTRL+C>
 ```
 
+
+## Convert bruker data
+```
+f = BrukerFile("data/brukerfileCart")
+raw = RawAcquisitionData(f)
+fout = ISMRMRDFile("data/converted_bruker_data.h5")
+save(fout, raw)
+```
+
+## reconstruct using matlab ismrmrd example
+```matlab
+[img_s] = mrd_recon_cartesian_bruker('data/converted_bruker_data.h5')
 ```
